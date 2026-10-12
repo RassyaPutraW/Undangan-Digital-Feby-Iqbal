@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Undangan Pernikahan Iqbal & Feby</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            background-color: #0b0b0b;
+            font-family: 'Montserrat', sans-serif;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        body {
+            overflow-y: hidden; /* Dikunci sementara saat loading */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            min-height: 100vh;
+            background-color: #000000;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ----------------------------------
+           OPTIMIZED LOADING SCREEN
+        ----------------------------------- */
+        #loader-screen {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            height: 100vh;
+            background-color: #080808;
+            z-index: 300;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 24px;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #loader-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loader-title {
+            font-family: 'Cinzel', serif;
+            font-size: 26px;
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .loader-subtitle {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #888888;
+            margin-bottom: 25px;
+        }
+
+        .progress-box {
+            width: 75%;
+            max-width: 280px;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #ffffff;
+            border-radius: 10px;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .loading-text {
+            font-size: 11px;
+            letter-spacing: 2px;
+            margin-top: 15px;
+            color: #aaaaaa;
+        }
+
+        /* ----------------------------------
+           MAIN CONTENT SECTION
+        ----------------------------------- */
+        #main-content {
+            opacity: 0;
+            width: 100%;
+            transition: opacity 1s ease 0.3s;
+        }
+
+        #main-content.visible {
+            opacity: 1;
+        }
+
+        section {
+            width: 100%;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 40px 20px 60px 20px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8)), 
+                        url('https://i.postimg.cc/pd3BMWVq/IMG-20261012-WA0053.jpg') center/cover no-repeat;
+        }
+
+        .sub-title {
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 300;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .main-title {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .date-location {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 1.8;
+        }
+
+        /* Quran Quote */
+        .quran-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), 
+                        url('https://i.postimg.cc/9MJFqM4P/IMG-20261012-WA0050.jpg') center/cover no-repeat;
+        }
+
+        .quran-title {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        .quran-text {
+            font-size: 13px;
+            line-height: 1.9;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 400px;
+        }
+
+        /* Mempelai Card */
+        .bride-groom-card {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+            text-align: left;
+            padding: 50px 20px;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bride-card {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 15%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.1) 100%), 
+                        url('https://i.postimg.cc/MH9Mx5bJ/IMG-20261012-WA0051.jpg') center/cover no-repeat;
+        }
+
+        .groom-card {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 15%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.1) 100%), 
+                        url('https://i.postimg.cc/tCLSHNr6/IMG-20261012-WA0066.jpg') center/cover no-repeat;
+        }
+
+        .mempelai-tag {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.85);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .mempelai-nama {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            letter-spacing: 2px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+            line-height: 1.2;
+        }
+
+        .mempelai-line {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        .mempelai-anak {
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            margin-right: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .mempelai-line-bar {
+            flex-grow: 1;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .mempelai-ortu {
+            font-size: 5px;
+            line-height: 1.5;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+        }
+
+        .btn-instagram {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #ffffff;
+            color: #111111;
+            padding: 9px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        /* Event Info Cards */
+        .event-section {
+            background-color: #121212;
+        }
+
+        .section-header {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 25px 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            text-align: left;
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            letter-spacing: 2px;
+            color: #e0e0e0;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .card-detail {
+            font-size: 13px;
+            line-height: 1.8;
+            color: #cccccc;
+            margin-bottom: 18px;
+        }
+
+        .btn-map {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 10px 0;
+            border-radius: 20px;
+            font-size: 12px;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        /* RSVP Section */
+        .rsvp-section {
+            background-color: #121212;
+            padding-bottom: 80px;
+        }
+
+        .rsvp-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            display: block;
+            color: #ccc;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+        }
+
+        .btn-send-wa {
+            background-color: #25D366;
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        /* Animasi Scroll */
+        .fade-element {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-element.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Floating Music Button */
+        .music-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 42px;
+            height: 42px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #111;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            cursor: pointer;
+            z-index: 99;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ================= ANIMASI LOADING SCREEN ================= -->
+        <div id="loader-screen">
+            <h2 class="loader-title">IQBAL & FEBY</h2>
+            <p class="loader-subtitle">Memuat Undangan...</p>
+            <div class="progress-box">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p class="loading-text" id="progressText">0%</p>
+        </div>
+
+        <!-- ================= ISI UNDANGAN ================= -->
+        <div id="main-content">
+            <!-- Hero Header -->
+            <section class="hero-section">
+                <p class="sub-title fade-element">Kami mengundang Anda<br>untuk menghadiri<br>pernikahan</p>
+                <h1 class="main-title fade-element">FEBY <span style="font-size: 22px;">&#8734;</span> IQBAL</h1>
+                <div class="date-location fade-element">
+                    <p>JUMAT, 04 DESEMBER 2026.</p>
+                    <p>VILLA PAK JENDRAL.</p>
+                </div>
+            </section>
+
+            <!-- Section Kutipan / Ayat -->
+            <section class="quran-section">
+                <h2 class="quran-title fade-element">Q.S. AR-RUM [30]: 21</h2>
+                <p class="quran-text fade-element">
+                    "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir."
+                </p>
+            </section>
+
+            <!-- ================= MEMPELAI WANITA ================= -->
+            <div class="bride-groom-card bride-card">
+                <p class="mempelai-tag fade-element">MEMPELAI WANITA</p>
+                <h2 class="mempelai-nama fade-element">Feby Syafitri</h2>
+                
+                <div class="mempelai-line fade-element">
+                    <span class="mempelai-anak">PUTRI DARI BAPAK (ALM) RUHYAT Waryo Sukana</span>
+                    <div class="mempelai-line-bar"></div>
+                </div>
+
+                <p class="mempelai-ortu fade-element">
+                    Bapak (ALM) Ruhyat Waryo Sukana Dan<br>
+                    Ibu Doto Sudarayati
+                </p>
+
+                <a href="https://www.instagram.com/febysyftr" target="_blank" class="btn-instagram fade-element">
+                    <i class="fa-brands fa-instagram"></i> febysysftr
+                </a>
+            </div>
+
+            <!-- ================= MEMPELAI PRIA ================= -->
+            <div class="bride-groom-card groom-card">
+                <p class="mempelai-tag fade-element">MEMPELAI PRIA</p>
+                <h2 class="mempelai-nama fade-element">Mas Muhammad Iqbal Muttaqin</h2>
+                
+                <div class="mempelai-line fade-element">
+                    <span class="mempelai-anak">PUTRA DARI Bapak (Alm) Drs. H M Tahrir M.si</span>
+                    <div class="mempelai-line-bar"></div>
+                </div>
+
+                <p class="mempelai-ortu fade-element">
+                    Bapak (Alm) Drs. H M Tahrir M.si Dan<br>
+                    Ibu HJ Tika Kartika
+                </p>
+
+                <a href="https://www.instagram.com/armelianafr?srtk=MXViODM5Z3ZjNW5pdA==" target="_blank" class="btn-instagram fade-element">
+                    <i class="fa-brands fa-instagram"></i> iqbalmutaqqin
+                </a>
+            </div>
+
+            <!-- Section Rangkaian Acara -->
+            <section class="event-section">
+                <h2 class="section-header fade-element">Waktu & Tempat</h2>
+
+                <div class="card fade-element">
+                    <h3 class="card-title">AKAD NIKAH</h3>
+                    <div class="card-detail">
+                        <p><i class="fa-regular fa-calendar"></i> Senin, 04 Desember 2026</p>
+                        <p><i class="fa-regular fa-clock"></i> 08.00 WIB - Selesai</p>
+                        <p><i class="fa-solid fa-location-dot"></i> Villa Pak Jendral</p>
+                        <p style="font-size: 11px; color: #999; margin-top: 5px;">Jl. Raya Puncak - Leuwimalang, Kec. Cisarua, Kabupaten Bogor, Jawa Barat</p>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" class="btn-map">
+                        <i class="fa-solid fa-map-location-dot"></i> Petunjuk Lokasi
+                    </a>
+                </div>
+            </section>               
+
+            <!-- Section RSVP (WhatsApp) -->
+            <section class="rsvp-section">
+                <h2 class="section-header fade-element">Konfirmasi Kehadiran</h2>
+                <form class="rsvp-form fade-element" onsubmit="sendToWhatsApp(event)">
+                    <div class="form-group">
+                        <label for="name">Nama Lengkap</label>
+                        <input type="text" id="name" class="form-control" placeholder="Masukkan nama Anda" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Konfirmasi Kehadiran</label>
+                        <select id="status" class="form-control" required>
+                            <option value="Hadir">Ya, Saya Akan Hadir</option>
+                            <option value="Tidak Hadir">Maaf, Saya Tidak Bisa Hadir</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="count">Jumlah Tamu Hadir</label>
+                        <select id="count" class="form-control">
+                            <option value="1 Orang">1 Orang</option>
+                            <option value="2 Orang">2 Orang</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-send-wa">
+                        <i class="fa-brands fa-whatsapp"></i> Kirim Konfirmasi via WA
+                    </button>
+                </form>
+            </section>
+        </div>
+
+        <!-- Tombol Audio Melayang -->
+        <div class="music-button" id="musicBtn" onclick="toggleAudio()" style="display: none;">
+            <i class="fa-solid fa-volume-high" id="musicIcon"></i>
+        </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="lagu.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        var audio = document.getElementById("bgMusic");
+        var musicIcon = document.getElementById("musicIcon");
+        var musicBtn = document.getElementById("musicBtn");
+        var isPlaying = false;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const guestName = urlParams.get('to');
+        if (guestName) {
+            document.getElementById('name').value = decodeURIComponent(guestName);
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            let progress = 0;
+            const progressBar = document.getElementById("progressBar");
+            const progressText = document.getElementById("progressText");
+            const loaderScreen = document.getElementById("loader-screen");
+            const mainContent = document.getElementById("main-content");
+
+            const interval = setInterval(() => {
+                progress += Math.floor(Math.random() * 10) + 5;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    setTimeout(() => {
+                        loaderScreen.classList.add("fade-out");
+                        mainContent.classList.add("visible");
+                        document.body.style.overflowY = "auto"; // Membuka fungsi scroll
+                        musicBtn.style.display = "flex";
+                        
+                        playAudio();
+                        checkScrollAnimations();
+                    }, 400);
+                }
+                progressBar.style.width = progress + "%";
+                              progressText.innerText = progress + "%";
+            }, 60);
+        });
+
+        function playAudio() {
+            audio.play().then(() => {
+                isPlaying = true;
+                musicIcon.className = "fa-solid fa-volume-high";
+            }).catch(error => {
+                console.log("Autoplay diblokir browser:", error);
+                isPlaying = false;
+                musicIcon.className = "fa-solid fa-volume-xmark";
+            });
+        }
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                musicIcon.className = "fa-solid fa-volume-xmark";
+            } else {
+                audio.play();
+                musicIcon.className = "fa-solid fa-volume-high";
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function sendToWhatsApp(event) {
+            event.preventDefault();
+            
+            const phoneNumber = "6285156546018";
+            const name = document.getElementById("name").value;
+            const status = document.getElementById("status").value;
+            const count = document.getElementById("count").value;
+
+            let message = `Halo, saya *${name}* ingin mengonfirmasi kehadiran untuk acara *Feby & Iqbal*.\n\n`;
+            message += `*Status Kehadiran:* ${status}\n`;
+            if (status === "Hadir") {
+                message += `*Jumlah Tamu:* ${count}\n`;
+            }
+            message += `\nTerima kasih!`;
+
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function checkScrollAnimations() {
+            const elements = document.querySelectorAll('.fade-element');
+            const windowHeight = window.innerHeight;
+
+            elements.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 40) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', checkScrollAnimations);
+    </script>
+</body>
+</html>
